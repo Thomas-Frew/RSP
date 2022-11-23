@@ -32,7 +32,6 @@ void delete_node(DoubleLinkedDict<T>** dict, DoubleLinkedDict<T>* deleted) {
     if (deleted->next != nullptr) {
         (deleted->next)->prev = deleted->prev;
     }
-
     if (deleted->prev != nullptr) {
         (deleted->prev)->next = deleted->next;
     } else {
