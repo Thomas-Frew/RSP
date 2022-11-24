@@ -1,89 +1,93 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-class IntList {
+template <typename T>
+class LinkedList {
     public:
-        int value;
-        IntList* next = NULL;
+        T value;
+        LinkedList<T>* next = nullptr;
 
-        void insert(IntList**l, int val);
-        IntList* search(IntList* e, int s);
-        void print(IntList* e);
-
-        IntList* predecessor_list(IntList* e, int s);
-        void delete_node(IntList** e, int d);
+        LinkedList(T v): value(v) {}
 };
 
-void IntList::insert(IntList **list, int value) {
-    IntList* p;
-    /* temporary pointer */
-    p = new IntList;
-    p->value = value;
-    p->next = *list;
-    *list = p;
+// Insert the new element at the start of a linked list
+template <typename T>
+void listInsert(LinkedList<T>** list, T value) {
+    LinkedList<T>* inserted = new LinkedList<T>(value);
+    inserted->next = *list;
+    *list = inserted;
 }
 
-IntList* IntList::search(IntList* element, int s) {
-        if (element->value == s) return element;
-        return search(element->next, s);
+template <typename T>
+void listPrint(LinkedList<T>* elem) {
+    cout << elem->value << endl;
+    if (elem->next != nullptr) listPrint(elem->next);
 }
 
-void IntList::print(IntList *element) {
-    if (element->next != NULL) {
-        cout << element->value << " ";
-        print(element->next);
+template <typename T>
+void listPrintInline(LinkedList<T>* elem) {
+    while (elem != nullptr) {
+        cout << elem->value << " ";
+        elem = elem->next;
     }
 }
 
-IntList* IntList::predecessor_list(IntList *element, int s) {
-    if (element == NULL || element->next == NULL) {
-        return NULL;
-    }
-
-    if ((element->next)->value == s) return element;
-    else predecessor_list(element->next, s);
+template <typename T>
+LinkedList<T>* listSearch(LinkedList<T>* elem, T search) {
+    if (elem->value == search) return elem;
+    else if (elem-> next != nullptr) return listSearch(elem->next, search);
+    else return nullptr;
+}
+template <typename T>
+LinkedList<T>* listPredecessor(LinkedList<T>* elem, T search) {
+    if ((elem->next)->value == search) return elem;
+    else if (elem->next->next != nullptr) return listPredecessor(elem->next, search);
+    return nullptr;
 }
 
-void IntList::delete_node(IntList** list, int d) {
-    IntList* deleted_node = (*list)->search(*list, d);
+template <typename T>
+void listDelete(LinkedList<T>** list, LinkedList<T>* deleted) {
+    LinkedList<T>* pred = listPredecessor(*list, deleted->value);
 
-    if (deleted_node != NULL) {
-        IntList* predecessor = (*list)->predecessor_list(*list, d);
-
-        if (predecessor == NULL) {
-            *list = deleted_node->next;
-        } else {
-            predecessor->next = deleted_node->next;
-        }
-        delete deleted_node;
+    if (pred != nullptr) {
+        pred->next = deleted->next;
+    } else {
+        *list = deleted->next;
     }
+    delete deleted;
 }
 
+/* Structure Driver
 int main() {
-    IntList* list = new IntList;
-    list->insert(&list, 1);
-    list->insert(&list, 2);
-    list->insert(&list, 3);
-    list->insert(&list, 4);
-    list->insert(&list, 5);
+    // Insert test
+    LinkedList<string>* list = new LinkedList<string>("Tom");
+    listInsert(&list, (string)"Myles");
+    listInsert(&list, (string)"Marwan");
+    listInsert(&list, (string)"Tanya");
 
-    list->print(list);
+    // Print test
+    listPrint(list);
+    listPrintInline(list);
 
+    // Search test
     cout << endl;
-    cout << list->search(list, 2) << endl;
-    cout << list->search(list, 1) << endl;
+    LinkedList<string>* tomPointer = listSearch(list, (string)"Tom");
+    LinkedList<string>* tanyaPointer = listSearch(list, (string)"Tanya");
+    cout << tomPointer->value << " and " << tanyaPointer->value << endl;
 
-    list->delete_node(&list, 3);
-    list->print(list);
+    // Predecessor test
     cout << endl;
+    LinkedList<string>* tomPred = listPredecessor(list, (string)"Tom");
+    LinkedList<string>* marwanPred = listPredecessor(list, (string)"Marwan");
+    cout << tomPred->value << " and " << marwanPred->value << endl;
 
-    list->delete_node(&list, 1);
-    list->print(list);
+    // Delete test
     cout << endl;
+    listDelete(&list, tanyaPointer);
+    listDelete(&list, tomPointer);
 
-    list->delete_node(&list, 5);
-    list->print(list);
-    cout << endl;
+    listPrint(list);
 
     return 0;
-}
+} */
