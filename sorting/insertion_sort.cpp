@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+
 template <typename T>
 T* insertionSort(T* array, int n) {
     for (int i = 1; i < n; i++) {
