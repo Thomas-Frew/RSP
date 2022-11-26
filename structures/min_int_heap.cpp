@@ -98,6 +98,8 @@ void heapPrintLevels(IntHeap* heap, int l = 1) {
     }
 }
 
+int heapHead(IntHeap* heap) { return heap->items[0]; }
+
 IntHeap* heapCreate(IntHeap* heap, int* data, int n) {
     for (int i = 0; i < n; i++) {
         heapInsert(heap,data[i]);
