@@ -1,7 +1,5 @@
 #include <iostream>
 using namespace std;
-#include "array_print.cpp"
-
 
 template <typename T>
 int partition(T* array, int low, int high) {
