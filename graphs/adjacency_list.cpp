@@ -46,6 +46,16 @@ void insertEdge(Graph* graph, int x, int y, bool directed = false, int weight = 
     }
 }
 
+bool edgeSearch(EdgeNode* edge, int search) {
+    if (edge == nullptr) return false;
+    else if (edge->y == search) return true;
+    else edgeSearch(edge->next, search);
+}
+
+bool hasEdge(Graph* graph, int x, int y) {
+    return edgeSearch(graph->edges[x], y);
+}
+
 void printGraph(Graph* graph) {
     cout << "Number of Vertices: " << graph->nVertices << endl;
     cout << "Number of Edges: " << graph->nEdges << endl;
@@ -66,9 +76,11 @@ void printGraph(Graph* graph) {
     }
 }
 
+// Structure driver
 int main() {
     Graph* graph = new Graph(5);
 
+    // Insert test
     insertEdge(graph,0,1);
     insertEdge(graph,0,2);
     insertEdge(graph,0,3);
@@ -79,8 +91,13 @@ int main() {
 
     insertEdge(graph,4,3);
 
-
+    // Print test
     printGraph(graph);
+
+    // Search test
+    cout << endl;
+    cout << hasEdge(graph,0,1) << endl; // True
+    cout << hasEdge(graph,4,2) << endl; // False
 
     return 0;
 }
