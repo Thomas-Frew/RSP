@@ -44,7 +44,7 @@ void search(BFS* bfs, Graph* g, int start = 0) {
     while(!(isEmpty(*q))) {
         v = dequeue(q); 
 
-        processVertex(v);
+        // processVertex(v);
         bfs->processed[v] = true;
 
         edge = g->edges[v];
@@ -52,7 +52,7 @@ void search(BFS* bfs, Graph* g, int start = 0) {
             e = edge->y;
             
             if (bfs->processed[e] == false || g->directed) {
-                processEdge(v,e);
+                // processEdge(v,e);
             }
 
             if (bfs->discovered[e] == false) {
@@ -68,14 +68,36 @@ void search(BFS* bfs, Graph* g, int start = 0) {
     }
 }
 
+void findPath(int* parentTree, int start, int end) {
+    if (start == end || end == -1) {
+        cout << end << " ";
+    } else {
+        findPath(parentTree, start, parentTree[end]);
+        cout << end << " ";
+    }
+}
+
+int countConnectedComponents(Graph* graph) {
+    int connectedComponents = 0;
+    BFS* bfs = new BFS(graph->nVertices);
+
+    for (int i = 0; i < graph->nVertices; i++) {
+        if (bfs->discovered[i] == false) {
+            connectedComponents++;
+            search(bfs, graph, i);
+        }
+    }
+
+    return connectedComponents;
+}
+
 int main() {
     // Create fixed-size graph
-    Graph* graph = new Graph(6);
+    Graph* graph = new Graph(8);
 
     // Insert test
     insertEdge(graph,0,1);
     insertEdge(graph,0,2);
-    insertEdge(graph,0,3);
     insertEdge(graph,0,4);
 
     insertEdge(graph,1,2);
@@ -83,6 +105,8 @@ int main() {
 
     insertEdge(graph,4,3);
     insertEdge(graph,5,3);
+
+    insertEdge(graph,6,7);
 
     // Print test
     printGraph(graph);
@@ -93,6 +117,14 @@ int main() {
     // BFS test
     cout << endl;
     search(bfs, graph);
+
+    // Pathfinding test
+    cout << endl;
+    findPath(bfs->parentTree, 0,3);
+
+    // Connected components test
+    cout << endl;
+    cout << "Connected components: " << countConnectedComponents(graph) << endl;
 
     return 0;
 }
