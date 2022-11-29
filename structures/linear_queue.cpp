@@ -25,7 +25,7 @@ void enqueue(Queue<T>** queue, T value) {
         while(iterator->next != nullptr) {
             iterator = iterator->next;
         }
-        
+
         iterator->next = newItem;
     }
 }
@@ -43,6 +43,13 @@ T dequeue(Queue<T>** queue) {
     return value;
 }
 
+template <typename T>
+bool isEmpty(Queue<T>* queue) {
+    return (queue == nullptr);
+}
+
+/*
+// Structure Driver
 int main() {
     Queue<char>* queue = new Queue<char>('O');
 
@@ -66,4 +73,5 @@ int main() {
     cout << dequeue(&queue) << endl;
     
     return 0;
-}
+} 
+*/
