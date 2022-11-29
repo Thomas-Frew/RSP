@@ -8,7 +8,8 @@ class EdgeNode {
         int weight;
         EdgeNode* next = nullptr;
 
-        EdgeNode(int _y, int w, EdgeNode* n): y(_y), weight(w), next(n) {}
+        EdgeNode(): y(NULL), weight(NULL), next(nullptr) {} 
+        EdgeNode(int v, int w, EdgeNode* n): y(v), weight(w), next(n) {}
 };
 
 class Graph {
@@ -24,8 +25,8 @@ class Graph {
             edges = new EdgeNode*[v];
             degrees = new int[v];
 
-            for (int i = 0; i <= v; i++) degrees[i] = 0;
-            for (int i = 0; i <= v; i++) edges[i] = nullptr;
+            for (int i = 0; i < v; i++) degrees[i] = 0;
+            for (int i = 0; i < v; i++) edges[i] = nullptr;
 
             nVertices = v;
             nEdges = 0;
@@ -34,15 +35,19 @@ class Graph {
 };
 
 void insertEdge(Graph* graph, int x, int y, bool directed = false, int weight = 0) {
-    EdgeNode* edge = new EdgeNode(y, weight, graph->edges[x]);
+    if (x < graph->nVertices && y < graph->nVertices) {
+        EdgeNode* edge = new EdgeNode(y, weight, graph->edges[x]);
 
-    graph->edges[x] = edge;
-    graph->degrees[x] = graph->degrees[x] + 1;
+        graph->edges[x] = edge;
+        graph->degrees[x] = graph->degrees[x] + 1;
 
-    if (directed == false) {
-        insertEdge(graph,y,x,true,weight);
+        if (directed == false) {
+            insertEdge(graph,y,x,true,weight);
+        } else {
+            graph->nEdges = graph->nEdges+1;
+        }
     } else {
-        graph->nEdges = graph->nEdges+1;
+        cout << "Warning! Attempting to create edge outside graph bounds." << endl;
     }
 }
 
@@ -76,9 +81,11 @@ void printGraph(Graph* graph) {
     }
 }
 
+/*
 // Structure driver
 int main() {
-    Graph* graph = new Graph(5);
+    // Create fixed-size graph
+    Graph* graph = new Graph(6);
 
     // Insert test
     insertEdge(graph,0,1);
@@ -90,6 +97,7 @@ int main() {
     insertEdge(graph,1,3);
 
     insertEdge(graph,4,3);
+    insertEdge(graph,5,3);
 
     // Print test
     printGraph(graph);
@@ -100,4 +108,4 @@ int main() {
     cout << hasEdge(graph,4,2) << endl; // False
 
     return 0;
-}
+} */
