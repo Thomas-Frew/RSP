@@ -4,12 +4,15 @@ using namespace std;
 
 class EdgeNode {
     public:
+        int x;
         int y;
+
         int weight;
         EdgeNode* next = nullptr;
 
         EdgeNode(): y(NULL), weight(NULL), next(nullptr) {} 
         EdgeNode(int v, int w, EdgeNode* n): y(v), weight(w), next(n) {}
+        EdgeNode(int v, int vv, int w, EdgeNode* n): x(v), y(vv), weight(w), next(n) {}
 };
 
 class Graph {
@@ -36,7 +39,7 @@ class Graph {
 
 void insertEdge(Graph* graph, int x, int y, bool directed = false, int weight = 0) {
     if (x < graph->nVertices && y < graph->nVertices) {
-        EdgeNode* edge = new EdgeNode(y, weight, graph->edges[x]);
+        EdgeNode* edge = new EdgeNode(x, y, weight, graph->edges[x]);
 
         graph->edges[x] = edge;
         graph->degrees[x] = graph->degrees[x] + 1;

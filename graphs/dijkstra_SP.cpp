@@ -4,68 +4,71 @@
 
 using namespace std;
 
-void primPrint(Graph* g, int* parents) {
+void dijkstraPrint(Graph* g, int* parentTree, int* distance) {
     for (int i = 0; i < g->nVertices; i++) {
-        cout << i << "'s parent is " << parents[i] << endl;
+        cout << "Shortest path to " << i << " is " << distance[i] << " units long." << endl;
+
+        int p = i;
+        cout << "This path is: ";
+        while (p != -1) {
+            cout << p << " ";
+            p = parentTree[p];
+        }
+        cout << endl;
     }
 }
 
-void primsAlgorithm(Graph* g, int start = 0) {
-    
-    bool* inTree = new bool[g->nVertices];
-    int* distances = new int[g->nVertices];
+void dijkstrasAlgorithm(Graph* g, int start = 0) {
     int* parentTree = new int[g->nVertices];
+    int* distance = new int[g->nVertices];
+    bool* inTree = new bool[g->nVertices];
+
     int v;
     int w;
-    int totalCost = 0;
-    int weight;
-    int dist;
+
     EdgeNode* p;
+    int weight;
+
+    int dist;
 
     for (int i = 0; i < g->nVertices; i++) {
-        inTree[i] = false;
-        distances[i] = numeric_limits<int>::max();
         parentTree[i] = -1;
+        distance[i] = numeric_limits<int>::max();
+        inTree[i] = false;
     }
 
     v = start;
+    distance[start] = 0;
 
     while (inTree[v] == false) {
         inTree[v] = true;
 
         p = g->edges[v];
 
-        // Update the minimum lengths to each vertex, and the parent coming from it
         while (p != nullptr) {
             w = p->y;
             weight = p->weight;
 
-            if (weight < distances[w] && inTree[w] == false) {
-                distances[w] = weight;
+            if (distance[w] > distance[v] + weight) {
+                distance[w] =  distance[v] + weight;
                 parentTree[w] = v;
             }
-            
+
             p = p->next;
         }
 
         v = 0;
-        dist =  numeric_limits<int>::max();
+        dist = numeric_limits<int>::max();
 
-        // Select the next vertex to assess
         for (int i = 0; i < g->nVertices; i++) {
-            if (distances[i] < dist && inTree[i] == false) {
-                dist = distances[i];
+            if (dist > distance[i] && inTree[i] == false) {
+                dist = distance[i];
                 v = i;
             }
         }
-
-        if (v != start) { totalCost += dist; }
     }
 
-    cout << endl;
-    cout << "Total cost: " << totalCost;
-    cout << endl;
-    primPrint(g, parentTree);
+    dijkstraPrint(g,parentTree,distance);
 }
 
 int main() {
@@ -91,8 +94,8 @@ int main() {
     // Print test
     printGraph(graph);
 
-    // Prim test
-    primsAlgorithm(graph);
+    // Dijkstra test
+    dijkstrasAlgorithm(graph);
 
     return 0;
 }
