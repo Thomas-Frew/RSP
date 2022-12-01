@@ -52,6 +52,7 @@ void printGraph(Graph* g) {
     }
 }
 
+/* Strcutre driver 
 int main() {
     Graph* graph = new Graph(7);
 
@@ -71,5 +72,14 @@ int main() {
 
     printGraph(graph);
 
+    cout << endl;
+    for (int i = 0; i < graph->nVertices; i++) {
+        for (int j = 0; j < graph->nVertices; j++) {
+            cout << graph->weights[i][j] << "\t \t";
+        }    
+        cout << endl;
+    }
+
     return 0;
 }
+*/
