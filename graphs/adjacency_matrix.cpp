@@ -18,7 +18,7 @@ class Graph {
                 weights[i] = new int[n];
 
                 for (int j = 0; j < n; j++) {
-                    weights[i][j] = numeric_limits<int>::max();
+                    weights[i][j] = 1000000;
                 }
             }
         }
@@ -45,7 +45,7 @@ void printGraph(Graph* g) {
         cout << i << " is connected to: ";
 
         for (int j = 0; j < g->nVertices; j++) {
-            if (g->weights[i][j] < numeric_limits<int>::max()) cout << j << " ";
+            if (g->weights[i][j] < 1000000) cout << j << " ";
         }
 
         cout << endl;

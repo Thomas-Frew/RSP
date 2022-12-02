@@ -15,7 +15,7 @@ void floydWashallAlgorithm(Graph* g) {
         for (int i = 0; i < g->nVertices; i++) {
             for (int j = 0; j < g->nVertices; j++) {
                 int throughK = g->weights[i][k] + g->weights[k][j];
-                if (throughK < g->weights[i][j]) {
+                if (throughK < g->weights[i][j] && throughK >= 0) {
                     g->weights[i][j] = throughK;
                 }
             }
