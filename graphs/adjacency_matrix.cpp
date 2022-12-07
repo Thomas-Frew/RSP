@@ -2,6 +2,8 @@
 #include <iostream>
 using namespace std;
 
+const int WEIGHTMAX = 1000000;
+
 class Graph {
     public:
         int** weights;
@@ -18,7 +20,7 @@ class Graph {
                 weights[i] = new int[n];
 
                 for (int j = 0; j < n; j++) {
-                    weights[i][j] = 1000000;
+                    weights[i][j] = WEIGHTMAX;
                 }
             }
         }
@@ -45,7 +47,7 @@ void printGraph(Graph* g) {
         cout << i << " is connected to: ";
 
         for (int j = 0; j < g->nVertices; j++) {
-            if (g->weights[i][j] < 1000000) cout << j << " ";
+            if (g->weights[i][j] < WEIGHTMAX) cout << j << " ";
         }
 
         cout << endl;
