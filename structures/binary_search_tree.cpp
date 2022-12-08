@@ -114,7 +114,7 @@ void delete_leaf(BinarySearchTree<T>* tree, BinarySearchTree<T>* deleted) {
 } */
 
 
-// Structure driver
+/* Structure driver
 int main() {
     // Insertion test
     BinarySearchTree<char>* tree = new BinarySearchTree<char>(0, 'T');
@@ -151,4 +151,4 @@ int main() {
     // Deletion TBA
 
     return 0;
-}
+}*/
