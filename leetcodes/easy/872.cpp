@@ -38,5 +38,11 @@ int main() {
     insert_leaf(&t2,2,2);
     insert_leaf(&t2,-2,-2);
 
+    // Time tracker
+    auto start = startTiming();
+
     cout << "Output: " << leafSimular(t1,t2) << endl;
+
+    // Time tracker
+    stopTiming(start);
 }
