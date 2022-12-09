@@ -63,5 +63,11 @@ int main() {
     vectorPrint(colCosts);
     cout << endl;
 
+    // Time tracker
+    auto start = startTiming();
+
     cout << "Minumum homecoming: " << minCost(startPos,homePos,rowCosts,colCosts) << endl;
+
+    // Time tracker
+    stopTiming(start);
 };

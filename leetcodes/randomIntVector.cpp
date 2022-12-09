@@ -7,7 +7,7 @@ using namespace std;
 /// @param size Size of the vector
 /// @return Random vector
 vector<int> randomIntVector(int size, int min = -100, int max = 100) {
-    srand(random());
+    srand(time(NULL));
 
     vector<int> v;
     for (int i = 0; i < size; i++) {
